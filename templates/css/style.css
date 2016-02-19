@@ -1,5 +1,16 @@
+#game-img{
+  width:300px;
+  height: 300px;
+}
 #logo img
 {
   width:100px;
   height: 100px;
+}
+footer > div.container > div.row,a[role="button"]{
+  color:#fff;
+}
+body {
+ background: url(../imgs/bg1.jpg) no-repeat;
+ background-size: cover;
 }
