@@ -1,6 +1,15 @@
+
+#pwd,#pwdcnfrm
+{
+  display:none;
+}
 #game-img{
   width:300px;
   height: 300px;
+}
+form[role="form"]  input
+{
+	color: #953e3e;
 }
 .top-head {
 	line-height: 80px;

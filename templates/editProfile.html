@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/bootstrap.css">
+
+  <link href="css/style_braga.css" rel="stylesheet">
+  <link href="css/style_petrov.css" rel="stylesheet">
+  <link href="css/style_kost9in.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/owl.carousel.css">
+  <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+  <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+  <script type="text/javascript" src="js/script_kost9in.js"></script>
+
+  <!-- https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js -->
+</head>
+  <body>
+    <header class="page-header">
+      <div class="container">
+        <div class="row top-head">
+          <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12" id="logo">
+            <a href="index.html"><img src="img/logo2.png"></a>
+
+          </div>
+            <a  class="col-xs-12 col-md-2 col-md-offset-3 game-list" href="#listGames" role="button">
+              Список Игр
+            </a>
+            <a  class="col-xs-12 col-md-2 offset-md-1  " href="#rank" role="button">
+              Рейтинг
+            </a>
+            <a  class="col-xs-12 col-md-2 offset-md-1  " href="#enter" role="button">
+              Войти
+            </a>
+        </div>
+      </div>
+    </header>
+    <script src="js/profile.js"></script>
+      <div class="profile">
+         <!-- <div class="container"> -->
+         <form role="form">
+           <div class="row upper-profile">
+             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 user-pic">
+               <img class="load_photo" src="img/profile.png" alt="userpic">
+             </div>
+
+             <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12 acc-info">
+               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group">
+                 <label for="User_name">Логин пользователя</label>
+                 <input id="User_name" type="text" name="User[login]"  placeholder="Введите логин пользователя"/>
+                 <!-- <div class="name load_name">Name Test</div> -->
+               </div>
+               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group">
+                 <label for="User_name">Email пользователя</label>
+                 <input id="User_email" type="text" name="User[email]"  disabled="true" value="test@mail.ru" />
+                  <!-- <div class="email load_mail">Email Test</div> -->
+               </div>
+
+               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group" >
+                  <label for="User_icon">Загрузить фото</label>
+                 <input id="User_icon" type="file" name="User[icon]" accept="image/jpeg,image/png,image/jpg"/>
+                  <!-- <div class="email load_mail">Email Test</div> -->
+               </div>
+
+               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group" id="pwd">
+                 <label for="User_password">Пароль пользователя</label>
+                 <input id="User_password" type="password" name="User[password]"  placeholder="Введите Пароль" />
+                  <!-- <div class="email load_mail">Email Test</div> -->
+               </div>
+               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group" id="pwdcnfrm">
+                  <label for="User_password_repeat">Повторить пароль</label>
+                 <input id="User_password_repeat" type="password" name="User[password_repeat]" placeholder="Повторите пароль" />
+                  <!-- <div class="email load_mail">Email Test</div> -->
+               </div>
+
+
+
+
+
+               <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group">
+                 <button type="button" class="btn btn-default">Сменить Пароль</button>
+                  <!-- <div class="email load_mail">Email Test</div> -->
+               </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6  form-group">
+                   <button type="submit" class="btn btn-default">Сохранить       </button>
+                   <!-- <div class="email load_mail">Email Test</div> -->
+                </div>
+
+
+             </div>
+
+           </div>
+
+         </form>
+         <!-- </div> -->
+       </div>
+       <script type="text/javascript">
+          document.querySelector('form[role="form"] button.btn').addEventListener('click',function(event){
+            event.preventDefault();
+            $(this).hide();
+            $("#pwdcnfrm,#pwd").show();
+          });
+          document.querySelector('form[role="form"] input[type="file"]').addEventListener('change',function(event){
+            event.preventDefault();
+            var fileImage = this.files[0],image = document.querySelector("img.load_photo"),reader = new FileReader();
+            image.title =  fileImage.filename;
+
+            reader.onload = function(event) {
+              image.src = event.target.result;
+            };
+            reader.readAsDataURL(fileImage);
+            // document.querySelector()
+            console.log(this.files);
+          });
+       </script>
+           <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-3 col-xs-offset-4 col-md-offset-5 col-md-2">
+             © 2016 MamkinKoder.
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

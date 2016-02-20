@@ -1,0 +1,219 @@
+body {
+	background: url(../img/bg3.jpg) no-repeat;
+	background-size: cover;
+	color: #eeeeee;
+}
+* {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.profile .upper-profile {
+	margin-top: 20px;
+}
+.profile .upper-profile .user-pic {
+	text-align: center;
+	width: 300px;
+	height: 200px;
+}
+.profile .upper-profile .user-pic img {
+	max-width: 100%;
+	max-height: 100%;
+}
+.profile .acc-info {
+	padding: 10px 20px;
+	padding-left: 50px;
+}
+.profile .acc-info .name {
+	font-size: 36px;
+	font-weight: bold;
+}
+.profile .acc-info .email {
+	font-size: 20px;
+}
+.profile .acc-info .change-pass {
+	margin-top: 10px;
+	font-size: 15px;
+}
+.profile .acc-info .change-pass a {
+	color: #303030;
+}
+.profile .stat {
+	margin: 0 20px;
+	margin-top: 20px;
+	padding-bottom: 10px;
+	border-top: 1px solid #606060;
+	border-bottom: 1px solid #606060;
+	text-align: center;
+	font-size: 50px;
+}
+.profile .stat .text {
+	text-transform: uppercase;
+	font-size: 22px;
+}
+.profile .prog-bar {
+	margin-top: 20px;
+	overflow: hidden;
+	border: 1px solid rgba(10, 10, 255, 0.4);
+	border-radius: 10px;
+	width: 50%;
+	text-align: center;
+	position: relative;
+}
+.profile .prog-bar .prog-bar-inner {
+	position: absolute;
+	left: -2px;
+	height: 100%;
+	background: rgba(10, 10, 255, 0.4);
+	border-radius: 10px 0 0 10px;
+}
+.profile .completed-games .title {
+	font-size: 32px;
+	font-weight: bold;
+	margin: 30px 0;
+	padding-left: 50px;
+}
+.profile .completed-games .game {
+	margin: 20px 0;
+}
+.profile .completed-games .game .game-pic {
+	float: left;
+	width: 150px;
+	text-align: center;
+	height: 150px;
+	line-height: 150px;
+	margin-right: 40px;
+}
+.profile .completed-games .game .game-pic img {
+	width: 80%;
+	height: 80%;
+	display: inline-block;
+}
+.profile .completed-games .game .game-name {
+	font-size: 24px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.profile .completed-games .game .game-diff {
+	color: #ff6600;
+	margin-bottom: 10px;
+}
+.profile .completed-games .game .game-description {
+	font-style: italic;
+}
+
+
+.register.wrap {
+	width: 370px;
+	margin: 0 auto;
+	background: rgba(255,255,255,0.2);
+	margin: 100px auto;
+	position: relative;
+	padding: 35px 30px;
+	box-sizing: border-box;
+}
+.register.wrap .title {
+	font-size: 24px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.register.wrap form {
+	text-align: center;
+}
+.register.wrap form input {
+	width: 100%;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+.forgot_link{margin-top: 20px;}
+.forgot_link a{color: #000;}
+.register.wrap .agree-ckb {
+	display: inline-block;
+	width: auto;
+}
+.register.wrap .checker {
+	display: inline-block;
+	margin: 0 10px;
+}
+
+
+.results .title {
+	text-align: center;
+	font-size: 48px;
+	margin: 20px 0;
+}
+.results .table {
+	text-align: center;
+}
+.results table {
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+.results table td,
+.results table th {
+	padding: 10px 15px;
+	text-align: center;
+}
+.results table td img {
+	width: 25px;
+	height: 25px;
+}
+.results table td:nth-child(3),
+.results table td:nth-child(4) {
+	width: 220px;
+}
+.results table th {
+	border-top: 1px solid #fff;
+}
+.results table tr:nth-child(2n+1) td {
+	background: rgba(255, 255, 255, .1);
+}
+.results table tr th {
+	background: rgba(255, 255, 255, .1);
+}
+.profile .acc-info .change-pass a {
+	color: #eee;
+}
+.profile .prog-bar .prog-bar-inner {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.4);
+}
+.profile .prog-bar {
+	color: #000;
+}
+
+
+
+
+@media (max-width: 991px) {
+	.profile .prog-bar {
+		width: 80%;
+	}
+	.results table td:nth-child(3),
+	.results table td:nth-child(4) {
+		width: 120px;
+	}
+}
+@media (max-width: 768px) {
+	.register.wrap {
+		width: 312px;
+	}
+	.upper-profile {
+		text-align: center;
+	}
+	.profile .upper-profile .user-pic {
+		width: 100%;
+	}
+	.profile .prog-bar {
+		display: inline-block;
+		text-align: center;
+	}
+	.results table td:nth-child(3),
+	.results table td:nth-child(4) {
+		width: 80px;
+	}
+	.results table td,
+	.results table th {
+		padding: 5px 5px;
+		text-align: center;
+	}
+
+}

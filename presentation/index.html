@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>XSS и iframe </title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Проблематика защиты веб-приложений </h1>
+				</section>
+				<section>
+					<h1>Почему это важно</h1>
+					<p>В эпоху  бурного развития  интернета ,
+						 количество  веб приложения и информации обрабатываемой ими возрасла n-кратно ,
+						 соответсвтенно задача безопасного хранения данных  получила особую  важность  </p>
+				</section>
+				<section>
+					<h1>Стоимость ошибки :</h1>
+					<p>
+						<small>
+							Стоимость ошибки сопоставима
+							со стоимостью информации  которую мы можем извлечь  эксплуатируя  какую  либо  брешь в веб приложении .
+							Стоимость  информации  прямопропорционально  зависит от количества  пользователей  какого либо сервиса.
+							Стоит  заметить что цена ошибки возрастает по мере срока эксплуатации системы ,
+							тоесть  если на начальном этапе работы  сервиса цена xss  - брешь стоит n д.е ,
+							 то по прошествию k-времени и увелечению количества пользователей на x,
+							стоимость такой  бреши будет стоить n*x
+						</small>
+					</p>
+				</section>
+				<section>
+					<h1>Пример<h1>
+					<h3>Для  наглядного примера  возьмем  реализованное мною веб приложение поддверженное XSS и iframe уязвимостям</h3>
+				</section>
+				<section>
+					<h1>Постановка задачи: </h1>
+					<p>
+						<small>
+							Создать  веб проложение - доску объявлений(callboard) ,  где пользователи(продавцы , покупатели , арендодатели , etc)
+	 					 смогут добавлять свои объявления ,обмениваться контактами   и договариваться о купле продаже своих  товаров  и  услуг
+					 </small>
+					</p>
+					<p>
+						Приложение  должно реализовывать следующий функционал:
+					</p>
+					<ul>
+						<li>Регистрация пользователя</li>
+						<li>Авторизация пользователя </li>
+						<li>CRUD для объявления</li>
+						<li>Вывод объявления на главную</li>
+					</ul>
+				</section>
+				<section>
+					<h3> Требования и правила для  данного функционала: </h3>
+					<ul>
+						<li>Объявление состоит из  date_created(даты создания) ,  description(описание) ,  и  title(заголовок) </li>
+						<li>Для полей title и description минимальное количество символов </li>
+						<li>При  создании объявлений пользователь  имеет право как либо выделять текст описания объявления </li>
+						<li>Валидация  полей должна происходить как на серверной так и на клиентской части  </li>
+					</ul>
+				</section>
+				<section>
+					<h3> Правила валидации для данных  требований и правил : </h3>
+						<p>
+							<small>Так как  приложение  построенна на php - фреймворке  Yii2 то для требований будут  такие привала валидаций</small>
+						</P>
+						<pre>
+							<code>
+								[['date_created'],'default','value'=>time()],
+		            [['title','description'],'string','min'=>10,'max'=>1000],
+		            [['title','description'],'required'],
+		            [['title'],'filter','filter'=>function($value){
+		                    return strip_tags($value);
+		                }
+		            ],
+					  	</code>
+						</pre>
+						<p> Так же для description применим регулярное  выражение , для  фильтрации  от XSS
+                 /&lt;script[\s\S]*?&gt;[\s\S]*?&lt;\/script&gt;/
+						</p>
+				</section>
+				<section>
+					<h3>В чем ошибка ?<h3>
+					<p>
+						<small>  При  реализации задачи crud для требования  о description объявления ,
+						  для  того что бы дать возможность пользователю выделять текст был применен javascript плагин CKEditor ,
+						  который  позволяет стилизировать текст ,  но данный плагин требует хранения в БД  html тегов ,
+							код javascript  возможно к странице привязать минимум 4 способами ,</small><code>&lt;script&gt;,&lt;iframe&gt;,&lt;link&gt;</code><small>и инлайн ,
+							получаеться  что атакующий может просто прописать инлайном  js-код,вставить посредством iframe и сделать  импорт через link</small>
+						 </p>
+				</section>
+				<section>
+					<h1>
+						Кто виноват ?
+					</h1>
+					<ul>
+						<li>UI - developer</li>
+						<li>Backend - developer </li>
+						<li>DB-developer</li>
+						<li>Product - owner</li>
+					</ul>
+				</section>
+				<section>
+					<h3>
+						Как  противодействовать ?
+					</h3>
+					<p><small>
+						 В идеале в dev-команде  должен быть специальный  человек ,
+						 который будет отвечать за безопасность веб приложения  - так называемый Pen - Tester .
+						 В случае если  привлечь такого сотрудника не удаеться  следует повыщать квалификацию dev - команды.
+						 Для этого идеально подойдет OWASP ( Organization Web - Application Security ) , где так же  можно пройти сертификацию .
+						 Так же стоит отметить  что  безопасность веб приложений являеться  комплексной задачей
+						 и для улучшений безопасности следует применить методы машшиного обучения для отслеживания  действий  пользователя .
+					 </small>
+					</p>
+				</section>
+			</div>
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
